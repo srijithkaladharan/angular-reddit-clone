@@ -19,4 +19,13 @@ export class PostService {
   createPost(postPayLoad: CreatePostPayload): Observable<any> {
     return this.http.post('http://localhost:8080/api/posts/', postPayLoad);
   }
+
+  getPost(postId: number): Observable<PostModel> {
+    return this.http.get<PostModel>('http://localhost:8080/api/posts/' + postId);
+  }
+
+  getAllPostsByUser(username: String): Observable<Array<PostModel>> {
+    console.log(username);
+    return this.http.get<Array<PostModel>>('http://localhost:8080/api/posts/by-username/' + username);
+  }
 }

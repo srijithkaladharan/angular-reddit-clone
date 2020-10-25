@@ -8,19 +8,18 @@ import { LoginResponse } from './auth/login/login-response.payload';
 @Injectable({
     providedIn: 'root'
 })
-export class TokenInterceptor implements HttpInterceptor {
 
+export class TokenInterceptor implements HttpInterceptor {
     isTokenRefreshing = false;
     refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject(null);
 
     constructor(public authService: AuthService) { }
 
-    intercept(req: HttpRequest<any>, next: HttpHandler):
-        Observable<HttpEvent<any>> {
-
+    intercept(req: HttpRequest<any>, next: HttpHandler) {
         if (req.url.indexOf('refresh') !== -1 || req.url.indexOf('login') !== -1) {
             return next.handle(req);
         }
+
         const jwtToken = this.authService.getJwtToken();
 
         if (jwtToken) {
@@ -34,11 +33,9 @@ export class TokenInterceptor implements HttpInterceptor {
             }));
         }
         return next.handle(req);
-
     }
 
-    private handleAuthErrors(req: HttpRequest<any>, next: HttpHandler)
-        : Observable<HttpEvent<any>> {
+    private handleAuthErrors(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
         if (!this.isTokenRefreshing) {
             this.isTokenRefreshing = true;
             this.refreshTokenSubject.next(null);
@@ -70,5 +67,4 @@ export class TokenInterceptor implements HttpInterceptor {
                 'Bearer ' + jwtToken)
         });
     }
-
 }
