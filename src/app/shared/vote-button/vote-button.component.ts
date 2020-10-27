@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PostModel } from '../post-model';
+import { PostModel } from '../../utils/models/post-model';
 import { faArrowUp, faArrowDown, faComments } from '@fortawesome/free-solid-svg-icons';
-import { VoteService } from '../vote.service';
-import { VotePayload } from '../vote-payload';
-import { VoteType } from '../vote-type';
+import { VoteService } from '../../utils/services/vote/vote.service';
+import { VotePayload } from '../../utils/models/vote-payload';
+import { VoteType } from '../../utils/models/vote-type';
 import { ToastrService } from 'ngx-toastr';
-import { PostService } from '../post.service';
+import { PostService } from '../../utils/services/post/post.service';
 
 @Component({
   selector: 'vote-button',

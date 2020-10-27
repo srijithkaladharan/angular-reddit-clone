@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PostModel } from './../post-model';
-import { PostService } from './../post.service';
+import { PostModel } from '../../utils/models/post-model';
+import { PostService } from '../../utils/services/post/post.service';
 import { faComments } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 
