@@ -16,12 +16,13 @@
                             <a *ngIf="post.username != null" class="username" href="">{{post.username}}</a>
                         </span>
                     </span>
+                    <span></span>
                     <hr />
                     <a routerLink="post.url" class="post-title">{{post.postName}}</a>
                     <div>
                         <p class="post-text" [innerHtml]="post.description"></p>
                     </div>
-                    <div class="post-comment">
+                    <div class="post-comment" *ngIf="isLoggedIn">
                         <form [formGroup]="commentForm" (ngSubmit)="postComment()">
                             <div class="form-group">
                                 <textarea class="form-control" [formControlName]="'text'"

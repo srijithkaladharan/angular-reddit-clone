@@ -4,7 +4,7 @@ import { LoginRequestPayload } from '../../utils/models/login-request.payload';
 import { AuthService } from '../../utils/services/auth/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslationWidth } from '@angular/common';
+
 
 @Component({
   selector: 'app-login',
@@ -31,6 +31,8 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    window.history.forward();
+
     this.loginForm = new FormGroup({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
@@ -49,14 +51,18 @@ export class LoginComponent implements OnInit {
     this.loginRequestPayload.password = this.loginForm.get('password').value;
     this.loginRequestPayload.username = this.loginForm.get('username').value;
 
-    this.authService.login(this.loginRequestPayload).subscribe(data => {
-      if (data) {
-        this.router.navigateByUrl('');
-        this.toastr.success('Login Successful');
-      } else {
+    this.authService.login(this.loginRequestPayload).subscribe(
+      (data) => {
+        if (data) {
+          this.router.navigateByUrl('');
+          this.toastr.success('Login Successful');
+        }
+        // else {
+        //   this.isError = true;
+        // }
+      }, (error) => {
         this.isError = true;
-      }
-    });
+      });
   }
 
 }

@@ -7,10 +7,10 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./pages/pages.module').then(module => module.PagesModule)
   },
-  {
-    path: '**',
-    redirectTo: ''
-  }
+  // {
+  //   path: '**',
+  //   redirectTo: ''
+  // }
 ];
 
 @NgModule({

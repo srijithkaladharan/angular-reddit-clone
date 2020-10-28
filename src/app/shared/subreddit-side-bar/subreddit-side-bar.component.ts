@@ -1,4 +1,6 @@
+import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { SubredditModel } from 'src/app/utils/models/subreddit-response';
 import { SubredditService } from '../../utils/services/subreddit/subreddit.service';
 
@@ -12,7 +14,7 @@ export class SubredditSideBarComponent implements OnInit {
 
   subreddits: Array<SubredditModel> = [];
 
-  constructor(private subredditService: SubredditService) {
+  constructor(private subredditService: SubredditService, private router: Router) {
     this.subredditService.getAllSubreddits().subscribe(data => {
       if (data.length >= 4) {
         this.subreddits = data.splice(0, 3);
@@ -24,6 +26,14 @@ export class SubredditSideBarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  goToSubredditPage(pageRoute, id) {
+    this.router.navigateByUrl(pageRoute + id);
+  }
+
+  goToPage(pageRoute: string) {
+    this.router.navigateByUrl(pageRoute);
   }
 
 }

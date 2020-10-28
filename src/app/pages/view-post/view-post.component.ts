@@ -6,6 +6,7 @@ import { throwError } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommentPayload } from '../../utils/models/comment.payload';
 import { CommentService } from '../../utils/services/comment/comment.service';
+import { AuthService } from 'src/app/utils/services/auth/auth.service';
 
 @Component({
   selector: 'app-view-post',
@@ -19,11 +20,13 @@ export class ViewPostComponent implements OnInit {
   commentPayload: CommentPayload;
   comments: CommentPayload[];
   commentForm: FormGroup;
+  isLoggedIn: boolean;
 
   constructor(
     private postService: PostService,
     private activateRoute: ActivatedRoute,
     private commentService: CommentService,
+    private authService: AuthService,
   ) {
     this.postId = this.activateRoute.snapshot.params.id;
 
@@ -35,11 +38,24 @@ export class ViewPostComponent implements OnInit {
       text: '',
       postId: this.postId
     };
+
+    this.post = {
+      id: this.postId,
+      postName: '',
+      description: '',
+      voteCount: 0,
+      username: '',
+      subredditName: '',
+      commentCount: 0,
+      duration: ''
+    }
+
   }
 
   ngOnInit(): void {
     this.getPostById();
     this.getCommentsForPost();
+    this.isLoggedIn = this.authService.isLoggedIn();
   }
 
   postComment() {
@@ -56,6 +72,7 @@ export class ViewPostComponent implements OnInit {
     this.postService.getPost(this.postId).subscribe(data => {
       this.post = data;
     }, error => {
+      console.log("ERROR MESSAGE", error);
       throwError(error);
     });
   }

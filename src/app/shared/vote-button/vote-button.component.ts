@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { PostModel } from '../../utils/models/post-model';
 import { faArrowUp, faArrowDown, faComments } from '@fortawesome/free-solid-svg-icons';
 import { VoteService } from '../../utils/services/vote/vote.service';
@@ -12,7 +12,7 @@ import { PostService } from '../../utils/services/post/post.service';
   templateUrl: './vote-button.component.html',
   styleUrls: ['./vote-button.component.scss']
 })
-export class VoteButtonComponent implements OnInit {
+export class VoteButtonComponent implements AfterViewInit {
 
   @Input() post: PostModel;
   votePayload: VotePayload;
@@ -31,7 +31,7 @@ export class VoteButtonComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.updateVoteDetails();
   }
 
@@ -50,6 +50,7 @@ export class VoteButtonComponent implements OnInit {
     this.voteService.vote(this.votePayload).subscribe(() => {
       this.updateVoteDetails();
     }, error => {
+      console.log(error);
       this.toastr.error(error.error.message);
       throw (error);
     });
